@@ -83,7 +83,7 @@ From within your working directory, create 5 directories as follows:
     
 Or it may be easier to download a template working directory for hg19 by executing 
 
-    wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/bundles/rnaseq_variant_calling_workflow/wd_hg19.tar.gz;
+    wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/bundles/ase_read_counting_workflow/wd_hg19.tar.gz;
     tar -zxvf wd_hg19.tar.gz;
 
 And then setting your `wd` parameter in the config file to point to this directory.
