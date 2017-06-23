@@ -1,9 +1,9 @@
-# rnaseq_variant_calling_workflow
+# ase_read_counting_workflow
 
 ## Download
 Clone the git repository with the command:
 
-    git clone https://github.com/durrantmm/rnaseq_variant_calling_workflow.git
+    git clone https://github.com/durrantmm/ase_read_counting_workflow.git
 
 ## Installation
 
