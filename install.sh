@@ -10,7 +10,7 @@ fi
 
 echo "Removing preexisting asecount environment if exists"
 source deactivate
-conda remove --name rnavcw --all --yes;
+conda remove --name asecount --all --yes;
 
 echo "Creating the new asecount environment from environment.yml"
 conda env create -f envs/environment.yml;
