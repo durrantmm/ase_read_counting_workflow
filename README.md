@@ -38,7 +38,8 @@ GATK requires you to make an account to download.
 
 Once they are both installed, you can enter their execution paths in the `config.yaml` file.
 
-You may want to add an addition flag, `-Xmx50G`, to make sure that Java allocates enough memory. The final
+You may want to add an addition flag, `-Xmx50G`, to make sure that Java allocates enough memory, especially if
+running the workflow on a cluster. The final
 `config.yaml` file would look something like this:
 
     gatk_path: "java -jar -Xmx50G /path/to/GenomeAnalysisTK.jar"
@@ -48,9 +49,17 @@ You may want to add an addition flag, `-Xmx50G`, to make sure that Java allocate
 The next parameter of the `config.yaml` file is `wd: test`. This is the default working directory, and it contains
 some test data to try out. You can give this a try by typing
     
-    snakemake --cores 12
+    snakemake --cores 12 --use-conda
     
 It should take a few minutes to run, but once it runs correctly you know you are all set.
+
+### IMPORTANT NOTE: `--use-conda`
+A few rules in the workflow require `python 2.7`, which requires a separate conda environment. This is automatically
+handled by the workflow ONLY IF YOU USE THE `--use-conda` flag.
+
+So make sure to always run snakemake with:
+
+    snakemake --use-conda
 
 ## Setting up a workflow
 It is essential that you set up your workflow properly before you run it. Follow these directions exactly.
@@ -68,17 +77,16 @@ Navigate to your working directory. Make sure you have chosen a file system that
 From within your working directory, create 5 directories as follows:
 
     mkdir 0.fastq;
+    mkdir 0.vcf;
     mkdir 0.reference_genome_fasta;
     mkdir 0.gencode;
-    mkdir 0.dbsnp;
-    mkdir 0.adar_sites;
-
-Or it may be easier to download a template working directory by executing 
+    
+Or it may be easier to download a template working directory for hg19 by executing 
 
     wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/bundles/rnaseq_variant_calling_workflow/wd_hg19.tar.gz;
     tar -zxvf wd_hg19.tar.gz;
 
-And then setting your `wd` parameter in the config file to this directory.
+And then setting your `wd` parameter in the config file to point to this directory.
 
 Now we'll go through each of the directories and describe how to populate them.
 
@@ -95,6 +103,15 @@ These fastq files must follow this precise format.
     ...
     
 This folder contains as many samples as you want. Make sure that the only periods are found in the `.R#.fq.gz` file extension.
+
+### `0.vcf`
+This file contains a VCF corresponding to each of the samples in `0.fastq`.
+  
+#### These files should contain only the HETEROZYGOUS sites for each of the corresponding samples.
+
+    <sample1>.vcf
+    <sample2>.vcf
+    ...
 
 ### `0.reference_genome_fasta`
 This is the reference genome fasta file to be used in this analysis. You can have as many reference genomes as you want.
@@ -120,39 +137,18 @@ It must have the same `<genome>` name as the corresponding reference genome in
 
 A version corresponding to hg19 can be downloaded from http://www.gencodegenes.org/releases/19.html
     
-### `0.dbsnp`
-This folder contains the dbsnp VCF file.
-
-It must follow the naming convention
-
-    <genome>.vcf
-
-It must have the same `<genome>` name as the corresponding reference genome in 
-`0.reference_genome_fasta` and `0.gencode`.    
-
-### `0.adar_sites`
-This folder contains known ADAR A-to-I RNA editing sites. They are excluded outright from the
-resulting RNA-seq variant calls.
-
-It must follow the naming convention
-
-    <genome>.txt
-
-It must have the same `<genome>` name as the corresponding reference genome in 
-`0.reference_genome_fasta`, `0.gencode`, and `0.dbsnp`.
-    
 ## Run Snakemake
 You should now be able to run the snakemake workflow.
 
 You can run this with the command
 
-    snakemake
+    snakemake --use-conda
     
 From the `rnaseq_variant_calling_workflow` directory.
 
 You can set the number of cores used with
 
-    snakemake --cores 12
+    snakemake --cores 12 --use-conda
 
 
 ## Cluster Job Submission
