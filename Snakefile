@@ -91,8 +91,7 @@ rule add_read_groups:
         '{add_rg_dir}/{{sample}}.{{genome}}.bam'.format(add_rg_dir=READ_GROUPS_DIR)
     run:
         command = "{picard} AddOrReplaceReadGroups I={input} O={output} SO=coordinate RGID=id " \
-                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample; " \
-                  "echo "" > {input}".format(picard=config['picard_path'],
+                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample; ".format(picard=config['picard_path'],
                   input=input, output=output)
 
         print(command)
@@ -186,8 +185,7 @@ rule remap_add_read_groups:
         '{add_rg_dir}/{{sample}}.{{genome}}.bam'.format(add_rg_dir=REMAP_RG_DIR)
     run:
         command = "{picard} AddOrReplaceReadGroups I={input} O={output} SO=coordinate RGID=id " \
-                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample; " \
-                  "echo "" > {input}".format(picard=config['picard_path'],
+                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample; ".format(picard=config['picard_path'],
                   input=input, output=output)
 
         print(command)

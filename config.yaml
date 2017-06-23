@@ -22,7 +22,7 @@ vcf_dir: 0.vcf
 # These directories will be created
 # as the workflow executes.
 snp_dir: 1.snps
-star_genome_dir: 1.star_genome
+star_genome_dir: 1.star_genomec
 sam_dir: 2.sam_dir
 add_rg_dir: 3.add_read_groups
 mark_dups_dir: 4.mark_duplicates
