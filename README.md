@@ -158,3 +158,9 @@ If you are using the SGE computing cluster system, you can submit a job using th
 
 You may need to play with the parameters in `cluster.json` to make sure that each step has enough memory and wall time 
 allocated to it.
+
+
+## Skipping steps
+If you hypothetically have the sam or bam files ready to go, there are ways to create dummy files to fill essentially trick
+snakemake into running from a later step. It's difficult to explain this in detail, but if you do a snakemake tutorial
+it should be quite clear to you.
