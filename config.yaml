@@ -12,11 +12,11 @@ wd: test
 # You must create and populate these directories in your
 # working directory (wd) with the starting files.
 # Symbolic links should work.
+# Please see the README for details
 fastq_dir: 0.fastq
 refgen_dir: 0.reference_genome_fasta
 gencode_dir: 0.gencode
 vcf_dir: 0.vcf
-
 
 
 # These directories will be created
@@ -31,9 +31,9 @@ remap_dir: 6.remap_dir
 remap_add_rg_dir: 7.remap_add_read_groups
 remap_mark_dups_dir: 8.remap_mark_duplicates
 filter_remapped_reads: 9.filter_remapped_reads
-merged_dir: _10.merged_wasp_bam
-sorted_dir: _11.sorted_bam
-read_counts_dir: _12.read_counts
+merged_dir: 10.merged_wasp_bam
+sorted_dir: 11.sorted_bam
+read_counts_dir: FINAL.read_counts
 
 
 # Extra rule configurations
