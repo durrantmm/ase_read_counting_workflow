@@ -8,12 +8,12 @@ if [ ${#IS_CONDA} -eq "0" ]
         exit 1
 fi
 
-echo "Removing preexisting rnavcw environment if exists"
+echo "Removing preexisting asecount environment if exists"
 source deactivate
 conda remove --name rnavcw --all --yes;
 
 echo "Creating the new asecount environment from environment.yml"
-conda env create -f environment.yml;
+conda env create -f envs/environment.yml;
 
 if [ $? -ne 0 ]
     then
@@ -23,7 +23,7 @@ fi
 
 echo "Downloading the test data."
 rm -rf test;
-wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/bundles/rnaseq_variant_calling_workflow/test.tar.gz;
+https://s3-us-west-1.amazonaws.com/mdurrant/biodb/bundles/ase_read_counting_workflow/test.tar.gz;
 tar -zxvf test.tar.gz;
 rm test.tar.gz;
 
@@ -41,8 +41,8 @@ echo "--------------------------------------------------------------------------
 echo "NOTE: You must specify the required information in the config.yaml file to run the workflow properly."
 echo "NOTE: Once configured, enter:"
 echo ""
-echo "> source activate rnavcw"
-echo "> snakemake"
+echo "> source activate asecount"
+echo "> snakemake --use-conda"
 echo ""
 echo "In this directory to run the workflow."
 echo "------------------------------------------------------------------------------------------------------"
