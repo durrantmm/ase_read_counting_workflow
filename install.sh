@@ -23,7 +23,7 @@ fi
 
 echo "Downloading the test data."
 rm -rf test;
-https://s3-us-west-1.amazonaws.com/mdurrant/biodb/bundles/ase_read_counting_workflow/test.tar.gz;
+wget https://s3-us-west-1.amazonaws.com/mdurrant/biodb/bundles/ase_read_counting_workflow/test.tar.gz;
 tar -zxvf test.tar.gz;
 rm test.tar.gz;
 
