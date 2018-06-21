@@ -1,3 +1,6 @@
+#Specify the read length of the fastq files
+read_length: 149
+
 # Give the execution path of picard and gatk
 # You may want to increase the memory available
 # to java with
@@ -7,7 +10,6 @@ picard_path: "java -jar picard.jar"
 
 # Set the working directory (wd)
 wd: test
-
 
 # You must create and populate these directories in your
 # working directory (wd) with the starting files.

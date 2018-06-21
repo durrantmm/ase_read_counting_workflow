@@ -64,21 +64,25 @@ rule star_align:
         genome_dir="{star_genome_dir}/{{genome}}".format(star_genome_dir=STAR_GENOME_DIR),
         f1='{fastq_dir}/{{sample}}.R1.fq.gz'.format(fastq_dir=FASTQ_DIR),
         f2='{fastq_dir}/{{sample}}.R2.fq.gz'.format(fastq_dir=FASTQ_DIR)
+        gencode="{gencode_dir}/{{genome}}.gtf".format(gencode_dir=GENCODE_DIR)
     output:
         dir='{sam_dir}/{{sample}}.{{genome}}'.format(sam_dir=SAM_DIR),
         sam='{sam_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.Aligned.out.sam'.format(sam_dir=SAM_DIR)
     threads: config['star_align_threads']
+    params:
+        overhang=config['read_length']-1
     run:
         out_prefix = str(output.sam).rstrip('Aligned.out.sam')+'.'
 
         command = "mkdir -p {{output.dir}}; " \
         "STAR --readFilesIn {{input.f1}} {{input.f2}} --outFileNamePrefix {out_prefix} " \
-        "--genomeDir {{input.genome_dir}} --readFilesCommand gunzip -c --runThreadN {threads} " \
-        "--genomeLoad NoSharedMemory --outFilterMultimapNmax 20 --alignSJoverhangMin 8 " \
-        "--alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 " \
-        "--alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --outSAMunmapped Within " \
-        "--outFilterType BySJout --outSAMattributes NH HI AS NM MD --sjdbScore 1 --twopassMode Basic " \
-        "--twopass1readsN -1".format(out_prefix=out_prefix, threads=threads)
+        "--genomeDir {{input.genome_dir}} --readFilesCommand zcat --runThreadN {threads} " \
+        "--genomeLoad NoSharedMemory --outFilterType BySJout " \
+        "--outSAMunmapped Within " \
+        "--outSAMattributes NH HI AS NM MD NM " \
+        "--twopassMode Basic " \
+        "--sjdbOverhang {params.overhang} "
+        "--sjdbGTFfile {{input.gencode}}"
 
         print(command)
         shell(command)
