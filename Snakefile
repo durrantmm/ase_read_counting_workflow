@@ -70,7 +70,7 @@ rule star_align:
         sam='{sam_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.Aligned.out.sam'.format(sam_dir=SAM_DIR)
     threads: config['star_align_threads']
     params:
-        overhang=config['read_length']-1
+        overhang=config['read_length']-1,
         out_prefix = str(output.sam).rstrip('Aligned.out.sam')+'.'
     shell:
         "mkdir -p {output.dir}; "
