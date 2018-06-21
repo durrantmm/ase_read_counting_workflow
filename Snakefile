@@ -52,11 +52,12 @@ rule star_genome:
         dir="{star_genome_dir}/{{genome}}".format(star_genome_dir=STAR_GENOME_DIR),
         sa="{star_genome_dir}/{{genome}}/SA".format(star_genome_dir=STAR_GENOME_DIR)
     threads: config['star_genome_threads']
-
+    params:
+        overhang=config['read_length']-1,
     shell:
         "mkdir -p {output.dir}; "
         "STAR --runThreadN {threads} --runMode genomeGenerate --genomeDir {output.dir} "
-        "--genomeFastaFiles {input.refgen} --sjdbGTFfile {input.gencode} --sjdbOverhang 75"
+        "--genomeFastaFiles {input.refgen} --sjdbGTFfile {input.gencode} --sjdbOverhang {params.overhang}"
 
 
 rule star_align:
@@ -71,7 +72,7 @@ rule star_align:
     threads: config['star_align_threads']
     params:
         overhang=config['read_length']-1,
-        out_prefix = '{output.sam}'.rstrip('Aligned.out.sam')+'.'
+        out_prefix = output.sam.rstrip('Aligned.out.sam')+'.'
     shell:
         "mkdir -p {output.dir}; "
         "STAR --readFilesIn {input.f1} {input.f2} --outFileNamePrefix {params.out_prefix} "
