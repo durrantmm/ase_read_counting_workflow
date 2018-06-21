@@ -1,1 +1,2 @@
-snakemake --use-conda --cluster-config cluster.json --cluster "qsub -V -l h_vmem={cluster.mem} -l h_rt={cluster.time} -l s_rt={cluster.time} -A {cluster.account}" -j 200 -p
+
+snakemake --use-conda --cluster-config slurm_cluster.json --cluster "sbatch -A {cluster.account} -p {cluster.partition} -n {cluster.n}  -t {cluster.time} --mem {cluster.mem}" -j 200 -p
