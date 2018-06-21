@@ -71,7 +71,7 @@ rule star_align:
     threads: config['star_align_threads']
     params:
         overhang=config['read_length']-1,
-        out_prefix = str(output.sam).rstrip('Aligned.out.sam')+'.'
+        out_prefix = '{output.sam'.rstrip('Aligned.out.sam')+'.'
     shell:
         "mkdir -p {output.dir}; "
         "STAR --readFilesIn {input.f1} {input.f2} --outFileNamePrefix {out_prefix} "
