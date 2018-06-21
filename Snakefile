@@ -71,21 +71,17 @@ rule star_align:
     threads: config['star_align_threads']
     params:
         overhang=config['read_length']-1
-    run:
         out_prefix = str(output.sam).rstrip('Aligned.out.sam')+'.'
-
-        command = "mkdir -p {{output.dir}}; " \
-        "STAR --readFilesIn {{input.f1}} {{input.f2}} --outFileNamePrefix {out_prefix} " \
-        "--genomeDir {{input.genome_dir}} --readFilesCommand zcat --runThreadN {threads} " \
-        "--genomeLoad NoSharedMemory --outFilterType BySJout " \
-        "--outSAMunmapped Within " \
-        "--outSAMattributes NH HI AS NM MD NM " \
-        "--twopassMode Basic " \
+    shell:
+        "mkdir -p {output.dir}; "
+        "STAR --readFilesIn {input.f1} {input.f2} --outFileNamePrefix {out_prefix} "
+        "--genomeDir {input.genome_dir} --readFilesCommand zcat --runThreadN {threads} "
+        "--genomeLoad NoSharedMemory --outFilterType BySJout "
+        "--outSAMunmapped Within "
+        "--outSAMattributes NH HI AS NM MD NM "
+        "--twopassMode Basic "
         "--sjdbOverhang {params.overhang} "
-        "--sjdbGTFfile {{input.gencode}}"
-
-        print(command)
-        shell(command)
+        "--sjdbGTFfile {input.gencode}"
 
 
 rule add_read_groups:
