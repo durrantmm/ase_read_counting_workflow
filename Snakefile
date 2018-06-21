@@ -72,7 +72,7 @@ rule star_align:
     threads: config['star_align_threads']
     params:
         overhang=config['read_length']-1,
-        out_prefix = output.sam.rstrip('Aligned.out.sam')+'.'
+        out_prefix='{sam_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.'.format(sam_dir=SAM_DIR)
     shell:
         "mkdir -p {output.dir}; "
         "STAR --readFilesIn {input.f1} {input.f2} --outFileNamePrefix {params.out_prefix} "
