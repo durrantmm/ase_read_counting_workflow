@@ -12,7 +12,7 @@ dependencies:
 - pyvcf=0.6.8=py36_0
 - samtools=1.4.1=0
 - snakemake=3.13.2=py36_0
-- star=2.5.3a=0
+- star=2.6.0c=0
 - urllib3=1.12=py36_0
 - curl=7.52.1=0
 - asn1crypto=0.22.0=py36_0
