@@ -23,19 +23,19 @@ vcf_dir: 0.vcf
 
 # These directories will be created
 # as the workflow executes.
-snp_dir: 1.snps
-star_genome_dir: 1.star_genome
-sam_dir: 2.sam_dir
-add_rg_dir: 3.add_read_groups
-mark_dups_dir: 4.mark_duplicates
-find_snps_dir: 5.find_intersecting_snps
-remap_dir: 6.remap_dir
-remap_add_rg_dir: 7.remap_add_read_groups
-remap_mark_dups_dir: 8.remap_mark_duplicates
-filter_remapped_reads: 9.filter_remapped_reads
+snp_dir: 01.snps
+star_genome_dir: 01.star_genome
+sam_dir: 02.sam_dir
+add_rg_dir: 03.add_read_groups
+mark_dups_dir: 04.mark_duplicates
+find_snps_dir: 05.find_intersecting_snps
+remap_dir: 06.remap_dir
+remap_add_rg_dir: 07.remap_add_read_groups
+remap_mark_dups_dir: 08.remap_mark_duplicates
+filter_remapped_reads: 09.filter_remapped_reads
 merged_dir: 10.merged_wasp_bam
 sorted_dir: 11.sorted_bam
-read_counts_dir: FINAL.read_counts
+read_counts_dir: 12.final_read_counts
 
 
 # Extra rule configurations
