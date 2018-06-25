@@ -5,8 +5,8 @@ read_length: 101
 # You may want to increase the memory available
 # to java with
 # "java -Xmx50G -jar GenomeAnalysisTK.jar"
-gatk_path: "java -jar GenomeAnalysisTK.jar"
-picard_path: "java -jar picard.jar"
+gatk_path: "java -Xms256M -Xmx50G -jar GenomeAnalysisTK.jar"
+picard_path: "java -Xms256M -Xmx50G -jar picard.jar"
 
 # Set the working directory (wd)
 wd: test
