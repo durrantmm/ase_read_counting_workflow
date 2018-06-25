@@ -53,7 +53,7 @@ rule star_genome:
         sa="{star_genome_dir}/{{genome}}/SA".format(star_genome_dir=STAR_GENOME_DIR)
     threads: config['star_genome_threads']
     params:
-        overhang=config['read_length']-1,
+        overhang=config['read_length']-1
     shell:
         "mkdir -p {output.dir}; "
         "STAR --runThreadN {threads} --runMode genomeGenerate --genomeDir {output.dir} "
@@ -164,6 +164,7 @@ rule star_remap:
         sam='{remap_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.Aligned.out.sam'.format(remap_dir=REMAP_DIR)
     threads: config['star_align_threads']
     params:
+        overhang=config['read_length']-1,
         out_prefix = '{remap_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.'.format(remap_dir=REMAP_DIR)
     shell:
         "mkdir -p {output.dir}; "
