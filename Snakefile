@@ -163,20 +163,18 @@ rule star_remap:
         dir='{remap_dir}/{{sample}}.{{genome}}'.format(remap_dir=REMAP_DIR),
         sam='{remap_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.Aligned.out.sam'.format(remap_dir=REMAP_DIR)
     threads: config['star_align_threads']
-    run:
-        out_prefix = str(output.sam).rstrip('Aligned.out.sam')+'.'
-
-        command = "mkdir -p {{output.dir}}; " \
-        "STAR --readFilesIn {{input.f1}} {{input.f2}} --outFileNamePrefix {out_prefix} " \
-        "--genomeDir {{input.genome_dir}} --readFilesCommand gunzip -c --runThreadN {threads} " \
-        "--genomeLoad NoSharedMemory --outFilterMultimapNmax 20 --alignSJoverhangMin 8 " \
-        "--alignSJDBoverhangMin 1 --outFilterMismatchNmax 999 --outFilterMismatchNoverReadLmax 0.04 " \
-        "--alignIntronMin 20 --alignIntronMax 1000000 --alignMatesGapMax 1000000 --outSAMunmapped Within " \
-        "--outFilterType BySJout --outSAMattributes NH HI AS NM MD --sjdbScore 1 --twopassMode Basic " \
-        "--twopass1readsN -1".format(out_prefix=out_prefix, threads=threads)
-
-        print(command)
-        shell(command)
+    params:
+        out_prefix = '{remap_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.'.format(remap_dir=REMAP_DIR)
+    shell:
+        "mkdir -p {output.dir}; "
+        "STAR --readFilesIn {input.f1} {input.f2} --outFileNamePrefix {params.out_prefix} "
+        "--genomeDir {input.genome_dir} --readFilesCommand zcat --runThreadN {threads} "
+        "--genomeLoad NoSharedMemory --outFilterType BySJout "
+        "--outSAMunmapped Within "
+        "--outSAMattributes NH HI AS NM MD NM "
+        "--twopassMode Basic "
+        "--sjdbOverhang {params.overhang} "
+        "--sjdbGTFfile {input.gencode}"
 
 
 rule remap_add_read_groups:
