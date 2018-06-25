@@ -157,6 +157,7 @@ rule find_intersecting_snps:
 rule star_remap:
     input:
         genome_dir="{star_genome_dir}/{{genome}}".format(star_genome_dir=STAR_GENOME_DIR),
+        gencode="{gencode_dir}/{{genome}}.gtf".format(gencode_dir=GENCODE_DIR),
         f1='{find_snps_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.remap.fq1.gz'.format(find_snps_dir=FIND_SNPS_DIR),
         f2='{find_snps_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.remap.fq2.gz'.format(find_snps_dir=FIND_SNPS_DIR)
     output:
