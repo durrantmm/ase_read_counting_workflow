@@ -42,7 +42,7 @@
         "time": "24:00:00"
     },
 
-    "star_align":{
+    "star_remap":{
         "mem": "60G",
         "time": "24:00:00"
     },
