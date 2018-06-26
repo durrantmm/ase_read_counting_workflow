@@ -244,8 +244,11 @@ rule samtools_sort:
         '{merged_dir}/{{sample}}.{{genome}}.bam'.format(merged_dir=MERGED_DIR)
     output:
         '{sorted_dir}/{{sample}}.{{genome}}.bam'.format(sorted_dir=SORTED_DIR)
+    params:
+        tmp_dir=TMP_DIR,
+        sample='{sample}'
     shell:
-        'samtools sort {input} > {output}'
+        'samtools sort -T {params.tmp_dir}/{params.sample} {input} > {output}'
 
 
 rule samtools_index:
