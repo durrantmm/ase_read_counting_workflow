@@ -4,6 +4,7 @@ import os
 from os.path import basename, join
 
 WD = config['wd']
+TMP_DIR = config['tmp_dir']
 
 FASTQ_DIR = join(WD, config['fastq_dir'])
 REFGEN_DIR = join(WD, config['refgen_dir'])
@@ -90,9 +91,11 @@ rule add_read_groups:
         '{sam_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.Aligned.out.sam'.format(sam_dir=SAM_DIR)
     output:
         '{add_rg_dir}/{{sample}}.{{genome}}.bam'.format(add_rg_dir=READ_GROUPS_DIR)
+    params:
+        tmp_dir=TMP_DIR
     run:
         command = "{picard} AddOrReplaceReadGroups I={input} O={output} SO=coordinate RGID=id " \
-                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample; ".format(picard=config['picard_path'],
+                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample TMP_DIR={params.tmp_dir}; ".format(picard=config['picard_path'],
                   input=input, output=output)
 
         print(command)
@@ -105,9 +108,11 @@ rule mark_duplicates:
     output:
         bam='{mark_dups_dir}/{{sample}}.{{genome}}.bam'.format(mark_dups_dir=MARK_DUPS_DIR),
         metrics='{mark_dups_dir}/{{sample}}.{{genome}}.metrics'.format(mark_dups_dir=MARK_DUPS_DIR)
+    params:
+        tmp_dir=TMP_DIR
     run:
         command = "{picard} MarkDuplicates I={input} O={output_bam} CREATE_INDEX=true " \
-                  "VALIDATION_STRINGENCY=SILENT M={output_metrics}".format(picard=config['picard_path'],
+                  "VALIDATION_STRINGENCY=SILENT M={output_metrics} TMP_DIR={params.tmp_dir}".format(picard=config['picard_path'],
                   input=input, output_bam=output.bam, output_metrics=output.metrics)
 
         print(command)
@@ -184,9 +189,11 @@ rule remap_add_read_groups:
         '{remap_dir}/{{sample}}.{{genome}}/{{sample}}.{{genome}}.Aligned.out.sam'.format(remap_dir=REMAP_DIR)
     output:
         '{add_rg_dir}/{{sample}}.{{genome}}.bam'.format(add_rg_dir=REMAP_RG_DIR)
+    params:
+        tmp_dir=TMP_DIR
     run:
         command = "{picard} AddOrReplaceReadGroups I={input} O={output} SO=coordinate RGID=id " \
-                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample; ".format(picard=config['picard_path'],
+                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample TMP_DIR={params.tmp_dir}; ".format(picard=config['picard_path'],
                   input=input, output=output)
 
         print(command)
@@ -199,9 +206,11 @@ rule remap_mark_duplicates:
     output:
         bam='{mark_dups_dir}/{{sample}}.{{genome}}.bam'.format(mark_dups_dir=REMAP_MD_DIR),
         metrics='{mark_dups_dir}/{{sample}}.{{genome}}.metrics'.format(mark_dups_dir=REMAP_MD_DIR)
+    params:
+        tmp_dir=TMP_DIR
     run:
         command = "{picard} MarkDuplicates I={input} O={output_bam} CREATE_INDEX=true " \
-                  "VALIDATION_STRINGENCY=SILENT M={output_metrics}".format(picard=config['picard_path'],
+                  "VALIDATION_STRINGENCY=SILENT M={output_metrics} TMP_DIR={params.tmp_dir}".format(picard=config['picard_path'],
                   input=input, output_bam=output.bam, output_metrics=output.metrics)
 
         print(command)
