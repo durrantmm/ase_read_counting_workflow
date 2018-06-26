@@ -95,8 +95,8 @@ rule add_read_groups:
         tmp_dir=TMP_DIR
     run:
         command = "{picard} AddOrReplaceReadGroups I={input} O={output} SO=coordinate RGID=id " \
-                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample TMP_DIR={params.tmp_dir}; ".format(picard=config['picard_path'],
-                  input=input, output=output)
+                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample TMP_DIR={params}; ".format(picard=config['picard_path'],
+                  input=input, output=output, params=params.tmp_dir)
 
         print(command)
         shell(command)
@@ -112,8 +112,8 @@ rule mark_duplicates:
         tmp_dir=TMP_DIR
     run:
         command = "{picard} MarkDuplicates I={input} O={output_bam} CREATE_INDEX=true " \
-                  "VALIDATION_STRINGENCY=SILENT M={output_metrics} TMP_DIR={params.tmp_dir}".format(picard=config['picard_path'],
-                  input=input, output_bam=output.bam, output_metrics=output.metrics)
+                  "VALIDATION_STRINGENCY=SILENT M={output_metrics} TMP_DIR={params}".format(picard=config['picard_path'],
+                  input=input, output_bam=output.bam, output_metrics=output.metrics, params=params.tmp_dir)
 
         print(command)
         shell(command)
@@ -193,8 +193,8 @@ rule remap_add_read_groups:
         tmp_dir=TMP_DIR
     run:
         command = "{picard} AddOrReplaceReadGroups I={input} O={output} SO=coordinate RGID=id " \
-                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample TMP_DIR={params.tmp_dir}; ".format(picard=config['picard_path'],
-                  input=input, output=output)
+                  "RGLB=library RGPL=ILLUMINA RGPU=machine RGSM=sample TMP_DIR={params}; ".format(picard=config['picard_path'],
+                  input=input, output=output, params=params.tmp_dir)
 
         print(command)
         shell(command)
@@ -210,8 +210,8 @@ rule remap_mark_duplicates:
         tmp_dir=TMP_DIR
     run:
         command = "{picard} MarkDuplicates I={input} O={output_bam} CREATE_INDEX=true " \
-                  "VALIDATION_STRINGENCY=SILENT M={output_metrics} TMP_DIR={params.tmp_dir}".format(picard=config['picard_path'],
-                  input=input, output_bam=output.bam, output_metrics=output.metrics)
+                  "VALIDATION_STRINGENCY=SILENT M={output_metrics} TMP_DIR={params}".format(picard=config['picard_path'],
+                  input=input, output_bam=output.bam, output_metrics=output.metrics, params=params.tmp_dir)
 
         print(command)
         shell(command)
