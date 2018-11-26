@@ -16,10 +16,10 @@ tmp_dir: tmp
 # working directory (wd) with the starting files.
 # Symbolic links should work.
 # Please see the README for details
-fastq_dir: 0.fastq
-refgen_dir: 0.reference_genome_fasta
-gencode_dir: 0.gencode
-vcf_dir: 0.vcf
+fastq_dir: 00.fastq
+refgen_dir: 00.reference_genome_fasta
+gencode_dir: 00.gencode
+vcf_dir: 00.vcf
 
 
 # These directories will be created
